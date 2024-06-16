@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gravity Game made with replit</title>
+  <style>
+    #container {
+      width: 100%;
+      height: 100vh;
+      position: relative;
+    }
+
+    #moving-section {
+      width: 100px;
+      height: 100px;
+      background-color: #ffcd05;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 30px;
+      border: solid 10px black;
+
+    }
+
+    body {
+      background: linear-gradient(45deg, #f0f0f0, #d0d0d0, #f0f0f0);
+      background-size: 400% 400%;
+      animation: gradientAnimation 15s ease infinite;
+    }
+
+
+    @keyframes gradientAnimation {
+      0% {
+
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-color: lightblue;
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-color: blue;
+        background-position: 0% 50%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container">
+    <section id="moving-section">
+      <h1
+        style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; font-size: 60px; position: fixed; text-align: center; display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; margin: 0;">
+        :)</h1>
+    </section>
+  </div>
+
+  <script>
+
+
+    var level = 1;
+
+    const section = document.getElementById('moving-section');
+
+    section.style.top = 550 + "px";
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const container = document.getElementById('container');
+      const step = 4;
+      let movingLeft = false;
+      let movingRight = false;
+
+
+      function moveSection() {
+        let newPositionX = parseInt(section.style.left) || 0;
+        let newPositionY = parseInt(section.style.top) || 0;
+
+        if (movingLeft) newPositionX -= step;
+        if (movingRight) newPositionX += step;
+
+        if (newPositionX < 0) newPositionX = 0;
+        if (newPositionY < 0) newPositionY = 0;
+        if (newPositionX + section.offsetWidth >= container.offsetWidth) newPositionX = container.offsetWidth - section.offsetWidth;
+        if (newPositionY + section.offsetHeight >= container.offsetHeight) newPositionY = container.offsetHeight - section.offsetHeight;
+
+        section.style.left = newPositionX + 'px';
+        section.style.top = newPositionY + 'px';
+      }
+
+      document.addEventListener('keydown', function (event) {
+        switch (event.key) {
+          case 'ArrowLeft':
+            movingLeft = true;
+            break;
+          case 'ArrowRight':
+            movingRight = true;
+            break;
+        }
+      });
+
+      document.addEventListener('keyup', function (event) {
+        switch (event.key) {
+          case 'ArrowLeft':
+            movingLeft = false;
+            break;
+          case 'ArrowRight':
+            movingRight = false;
+            break;
+        }
+      });
+
+      setInterval(moveSection, 10);
+    });
+  </script>
+  <script>
+    var jumdebounce = false
+    var currentlevel = 1;
+
+    function lvl1() {
+      const myDiv = document.getElementById('safeparts');
+
+
+      for (let i = 0; i < myDiv.children.length; i++) {
+        const element = myDiv.children[i];
+
+        if (element.id.startsWith("lvl1")) {
+          element.style.display = "block";
+        }
+        else {
+          element.style.display = "none";
+        }
+      }
+      const myseconddiv = document.getElementById("checkpoints")
+      for (let i = 0; i < myseconddiv.children.length; i++) {
+        const element = myseconddiv.children[i];
+
+        if (element.id.startsWith("lvl1")) {
+          element.style.display = "block";
+        }
+        else {
+          element.style.display = "none";
+        }
+      }
+
+
+
+      const section = document.getElementById('moving-section');
+      section.style.left = 100 + "px";
+      section.style.top = 200 + "px";
+      const killbricks = document.getElementById("KillParts")
+      for (let i = 0; i < killbricks.children.length; i++) {
+        const element = killbricks.children[i];
+        element.style.display = "none";
+      }
+    }
+
+    const section4214 = document.getElementById('moving-section');
+    section4214
+
+    function lvl2() {
+      document.getElementById("lvl1part1").style.display = 'none';
+      document.getElementById("lvl1part2").style.display = 'none';
+      document.getElementById("lvl1part3").style.display = 'none';
+      document.getElementById("lvl1part4").style.display = 'none';
+      document.getElementById("lvl2part1").style.display = 'block';
+      document.getElementById("lvl2part2").style.display = 'block';
+      document.getElementById("lvl2part3").style.display = 'block';
+      document.getElementById("lvl2part4").style.display = 'block';
+      document.getElementById("lvl2part5").style.display = 'block';
+    }
+
+
+    function lvl3() {
+      document.getElementById("lvl2part1").style.display = "none";
+      document.getElementById("lvl2part2").style.display = "none";
+      document.getElementById("lvl2part3").style.display = "none";
+      document.getElementById("lvl2part4").style.display = "none";
+      document.getElementById("lvl2part5").style.display = "none";
+      document.getElementById("lvl3part1").style.display = "block";
+      document.getElementById("lvl3part2").style.display = "block";
+      document.getElementById("lvl3part3").style.display = "block";
+    }
+
+    function lvl4() {
+      document.getElementById("lvl3part1").style.display = "none";
+      document.getElementById("lvl3part2").style.display = "none";
+      document.getElementById("lvl3part3").style.display = "none";
+      document.getElementById("lvl4part1").style.display = "block";
+      document.getElementById("lvl4part2").style.display = "block";
+      document.getElementById("lvl4part3").style.display = "block";
+      document.getElementById("lvl4part4").style.display = "block";
+      document.getElementById("lvl4part5").style.display = "block";
+      document.getElementById("lvl4part6").style.display = "block";
+    }
+
+    function lvl5() {
+      document.getElementById("lvl4part1").style.display = "none";
+      document.getElementById("lvl4part2").style.display = "none";
+      document.getElementById("lvl4part3").style.display = "none";
+      document.getElementById("lvl4part4").style.display = "none";
+      document.getElementById("lvl4part5").style.display = "none";
+      document.getElementById("lvl4part6").style.display = "none";
+      document.getElementById("lvl5part1").style.display = "block";
+      document.getElementById("lvl5part2").style.display = "block";
+      document.getElementById("lvl5part3").style.display = "block";
+      document.getElementById("lvl5part4").style.display = "block";
+      document.getElementById("lvl5part5").style.display = "block";
+    }
+
+    function lvl6() {
+      document.getElementById("lvl5part1").style.display = "none";
+      document.getElementById("lvl5part2").style.display = "none";
+      document.getElementById("lvl5part3").style.display = "none";
+      document.getElementById("lvl5part4").style.display = "none";
+      document.getElementById("lvl5part5").style.display = "none";
+      document.getElementById("lvl6part1").style.display = "block";
+      document.getElementById("lvl6part2").style.display = "block";
+      document.getElementById("lvl6part3").style.display = "block";
+      document.getElementById("lvl6part4").style.display = "block";
+    }
+
+    function lvl7() {
+      document.getElementById("lvl6part1").style.display = "none";
+      document.getElementById("lvl6part2").style.display = "none";
+      document.getElementById("lvl6part3").style.display = "none";
+      document.getElementById("lvl6part4").style.display = "none";
+      document.getElementById("lvl7part1").style.display = "block";
+      document.getElementById("lvl7part2").style.display = "block";
+      document.getElementById("lvl7part3").style.display = "block";
+      document.getElementById("lvl7part4").style.display = "block";
+      document.getElementById("lvl7part5").style.display = "block";
+      document.getElementById("lvl7part6").style.display = "block";
+      document.getElementById("lvl7part7").style.display = "block";
+    }
+
+    function lvl8() {
+      document.getElementById("lvl7part1").style.display = "none";
+      document.getElementById("lvl7part2").style.display = "none";
+      document.getElementById("lvl7part3").style.display = "none";
+      document.getElementById("lvl7part4").style.display = "none";
+      document.getElementById("lvl7part5").style.display = "none";
+      document.getElementById("lvl7part6").style.display = "none";
+      document.getElementById("lvl7part7").style.display = "none";
+      document.getElementById("lvl8part1").style.display = "block";
+      document.getElementById("finalpartlvl8part2").style.display = "block";
+
+
+    }
+
+
+
+
+    var gravityon = true;
+    var gravityValue = 0;
+    function applyGravity() {
+
+      const section = document.getElementById('moving-section');
+      section.style.top = (parseInt(section.style.top) + gravityValue) + 'px';
+      gravityValue += 0.1;
+
+
+    }
+    function checkCollision() {
+      const section1 = document.getElementById('moving-section');
+      const section2 = document.getElementById('floor');
+
+      const myDiv = document.getElementById('safeparts');
+
+      const rect1 = section1.getBoundingClientRect();
+
+
+      for (let i = 0; i < myDiv.children.length; i++) {
+        const element = myDiv.children[i];
+
+        const rect2 = element.getBoundingClientRect();
+
+        if (rect1.right >= rect2.left &&
+          rect1.left <= rect2.right &&
+          rect1.bottom >= rect2.top &&
+          rect1.top <= rect2.bottom) {
+          gravityon = false;
+          jumdebounce = false
+          gravityValue = 0;
+        }
+        else {
+          gravityon = true
+
+        }
+
+      }
+      const killbricks = document.getElementById("KillParts")
+      for (let i = 0; i < killbricks.children.length; i++) {
+        const element = killbricks.children[i];
+
+        const rect2 = element.getBoundingClientRect();
+
+        if (rect1.right >= rect2.left &&
+          rect1.left <= rect2.right &&
+          rect1.bottom >= rect2.top &&
+          rect1.top <= rect2.bottom) {
+          gravityon = false;
+          gravityValue = 0;
+          lvl1()
+        }
+
+      }
+      const jumppads = document.getElementById("jumppads")
+      for (let i = 0; i < jumppads.children.length; i++) {
+        const element = jumppads.children[i];
+
+        const rect2 = element.getBoundingClientRect();
+
+        if (rect1.right >= rect2.left &&
+          rect1.left <= rect2.right &&
+          rect1.bottom >= rect2.top &&
+          rect1.top <= rect2.bottom) {
+          gravityon = false;
+          gravityValue = 0;
+          for (let i = 0; i < 300; i++) {
+            setTimeout(() => (section.style.top = (parseInt(section.style.top) - 2.5) + 'px'), i);
+          }
+        }
+
+      }
+    }
+    function checkgravity() {
+      if (gravityon == true) {
+        applyGravity()
+      }
+      else { }
+    }
+    function CheckCheckpoints() {
+      const section = document.getElementById('moving-section');
+      const checkpoints = document.getElementById("checkpoints");
+      const rect1 = section.getBoundingClientRect();
+      for (let i = 0; i < checkpoints.children.length; i++) {
+        const checkpoint = checkpoints.children[i];
+        const rect2 = checkpoint.getBoundingClientRect();
+        if (
+          rect1.right >= rect2.left &&
+          rect1.left <= rect2.right &&
+          rect1.bottom >= rect2.top &&
+          rect1.top <= rect2.bottom
+        ) {
+          if (checkpoint.id === "lvl1part4") {
+            lvl2();
+          } else if (checkpoint.id === "lvl2part5") {
+            lvl3();
+          }
+          else if (checkpoint.id === "lvl3part3") {
+            lvl4()
+          }
+          else if (checkpoint.id === "lvl4part6") {
+            lvl5()
+          }
+          else if (checkpoint.id === "lvl5part5") {
+            lvl6()
+          }
+          else if (checkpoint.id === "lvl6part4") {
+            lvl7()
+          }
+          else if (checkpoint.id === "lvl7part7") {
+            lvl8()
+          }
+        }
+
+        gravityon = true;
+      }
+
+    }
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'ArrowUp') {
+        if (jumdebounce == false) {
+          gravityon = false
+          jumdebounce = true;
+          section.style.top = (parseInt(section.style.top) - 25) + 'px';
+
+          for (let i = 0; i < 150; i++) {
+            setTimeout(() => (section.style.top = (parseInt(section.style.top) - 2.5) + 'px'), i);
+          }
+          setTimeout(() => (gravityon = true), 500);
+
+        }
+      }
+    });
+    setInterval(checkCollision, 10);
+    setInterval(checkgravity, 1);
+    setInterval(CheckCheckpoints, 1)
+
+  </script>
+  <div id="safeparts">
+
+    <section id="lvl1part1"
+      style="display: block; width: 50%; height: 50px; background-color: lightgrey; position: fixed; top: 400px; border: 10px #7d7f82 solid; border-radius: 10px;">
+    </section>
+    <section id="lvl1part2"
+      style="display: block; width: 100%; height: 50px; background-color: lightgrey; position: fixed; top: 500px; border: 10px #7d7f82 solid;">
+    </section>
+    <section id="lvl1part3"
+      style="display: block; width: 50%; height: 50px; background-color: lightgrey; position: fixed; top: 100px; border: 10px #7d7f82 solid; left: 50%;">
+    </section>
+
+    <section id="lvl2part1"
+      style="display: none; width: 50%; height: 50px; background-color: lightgrey; position: fixed; top: 100px; border: 10px #7d7f82 solid; left: 50%;">
+    </section>
+    <section id="lvl2part2"
+      style="display: none; width: 50%; height: 50px; background-color: lightgrey; position: fixed; top: 300px; border: 10px #7d7f82 solid; ">
+    </section>
+    <section id="lvl2part3"
+      style="display: none; width: 50%; height: 50px; background-color: lightgrey; position: fixed; top: 500px; border: 10px #7d7f82 solid; left: 50%; ">
+    </section>
+    <section id="lvl2part4"
+      style=" display: none; width: 50%; height: 50px; background-color: lightgrey; position: fixed; top: 550px; border: 10px #7d7f82 solid;  ">
+    </section>
+    <section id="lvl3part1"
+      style=" display: none; width: 100%; height: 50px; background-color: lightgrey; position: fixed; top: 550px; border: 10px #7d7f82 solid;  ">
+    </section>
+    <section id="lvl4part1"
+      style=" display: none; width: 25%; height: 50px; background-color: lightgrey; position: fixed; top: 550px; border: 10px #7d7f82 solid; left: 75%; ">
+    </section>
+    <section id="lvl4part2"
+      style=" display: none; width: 50%; height: 50px; background-color: lightgrey; position: fixed; top: 500px; border: 10px #7d7f82 solid; left: 20%; ">
+    </section>
+    <section id="lvl4part5"
+      style=" display: none; width: 20%; height: 50px; background-color: lightgrey; position: fixed; top: 400px; border: 10px #7d7f82 solid;  ">
+    </section>
+    <section id="lvl5part1"
+      style=" display: none; width: 20%; height: 50px; background-color: lightgrey; position: fixed; top: 400px; border: 10px #7d7f82 solid;  ">
+    </section>
+    </section>
+    <section id="lvl5part2"
+      style=" display: none; width: 75%; height: 50px; background-color: lightgrey; position: fixed; top: 250px; border: 10px #7d7f82 solid; left: 10%; ">
+    </section>
+    <section id="lvl5part4"
+      style=" display: none; width: 20%; height: 50px; background-color: lightgrey; position: fixed; top: 400px; border: 10px #7d7f82 solid; left: 85%; ">
+    </section>
+    <section id="lvl6part1"
+      style=" display: none; width: 30%; height: 50px; background-color: lightgrey; position: fixed; top: 400px; border: 10px #7d7f82 solid; left: 70%; ">
+    </section>
+    <section id="lvl6part3"
+      style=" display: none; width: 10%; height: 50px; background-color: lightgrey; position: fixed; top: 400px; border: 10px #7d7f82 solid;  ">
+    </section>
+    <section id="lvl7part1"
+      style=" display: none; width: 10%; height: 50px; background-color: lightgrey; position: fixed; top: 400px; border: 10px #7d7f82 solid;  ">
+    </section>
+    <section id="lvl7part6"
+      style=" display: none; width: 10%; height: 50px; background-color: lightgrey; position: fixed; top: 400px; border: 10px #7d7f82 solid; left: 80%;">
+    </section>
+    <section id="lvl8part1"
+      style=" display: none; width: 100%; height: 50px; background-color: lightgrey; position: fixed; top: 400px; border: 10px #7d7f82 solid; ;">
+    </section>
+
+
+
+
+
+  </div>
+  <div id="checkpoints">
+    <section id="lvl1part4"
+      style="display: block; width: 50%; height: 80px; background-color: #12c924; position: fixed; top: 10px; border: 10px #57eb66 solid; left: 75%;">
+    </section>
+    <section id="lvl2part5"
+      style="display: none; width: 50px; height: 80px; background-color: #12c924; position: fixed; top: 452px; border: 10px #57eb66 solid; display: none;">
+    </section>
+    <section id="lvl3part3"
+      style="display: none; width: 50px; height: 80px; background-color: #12c924; position: fixed; top: 452px; border: 10px #57eb66 solid; display: none; left: 85%;">
+    </section>
+    <section id="lvl4part6"
+      style="display: none; width: 50px; height: 80px; background-color: #12c924; position: fixed; top: 301px; border: 10px #57eb66 solid; display: none; ">
+    </section>
+    <section id="lvl5part5"
+      style="display: none; width: 50px; height: 80px; background-color: #12c924; position: fixed; top: 301px; border: 10px #57eb66 solid; display: none; left: 85%; ">
+    </section>
+    <section id="lvl6part4"
+      style="display: none; width: 50px; height: 80px; background-color: #12c924; position: fixed; top: 301px; border: 10px #57eb66 solid; display: none;  ">
+    </section>
+    <section id="lvl7part7"
+      style="display: none; width: 50px; height: 80px; background-color: #12c924; position: fixed; top: 301px; border: 10px #57eb66 solid; display: none; left: 81%;  ">
+    </section>
+  </div>
+
+  <div id="KillParts">
+    <section id="lvl3part2"
+      style=" display: none; width: 5px; height: 5px; background-color: #c40808; position: fixed; top: 530px; border: 10px #ff0000  solid; left: 50%;  ">
+    </section>
+    <section id="lvl4part3"
+      style=" display: none; width: 5px; height: 5px; background-color: #c40808; position: fixed; top: 480px; border: 10px #ff0000  solid; left: 60%;  ">
+    </section>
+    <section id="lvl4part4"
+      style=" display: none; width: 5px; height: 5px; background-color: #c40808; position: fixed; top: 480px; border: 10px #ff0000  solid; left: 30%;  ">
+    </section>
+    <section id="lvl5part3"
+      style=" display: none; width: 75%; height: 20px; background-color: #c40808; position: fixed; top: 220px; border: 10px #ff0000  solid; left: 10%;  ">
+    </section>
+    <section id="lvl7part3"
+      style=" display: none; width: 5px; height: 5px; background-color: #c40808; position: fixed; top: 575px; border: 10px #ff0000  solid; left: 20%;  ">
+    </section>
+    <section id="lvl7part4"
+      style=" display: none; width: 5px; height: 5px; background-color: #c40808; position: fixed; top: 575px; border: 10px #ff0000  solid; left: 40%;  ">
+    </section>
+    <section id="lvl7part5"
+      style=" display: none; width: 5px; height: 5px; background-color: #c40808; position: fixed; top: 575px; border: 10px #ff0000  solid; left: 60%;  ">
+    </section>
+
+
+  </div>
+
+  <div id="jumppads">
+    <section id="lvl6part2"
+      style=" display: none; width: 60%; height: 20px; background-color: #5b186e; position: fixed; top: 600px; border: 10px #47186e  solid;   left: 10%;">
+    </section>
+    <section id="lvl7part2"
+      style=" display: none; width: 80%; height: 20px; background-color: #5b186e; position: fixed; top: 600px; border: 10px #47186e  solid;   left: 10%;">
+    </section>
+
+  </div>
+  <div id="text">
+    <p id="finalpartlvl8part2"
+      style="top: 0px; left: 10%; text-align: center; font-size: 100px; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; display: none; color: black; position: fixed; ">
+      Well Done! I did not think anyone could get this far!</p>
+  </div>
+</body>
+
+</html>
