@@ -1,4 +1,5 @@
 # put this code into a HTML editor
 all the code is contained in the "index.html" page
+currently only 1 image
 
-# Please tell me how to make this a gitpage
+# go to kaboomcrew.github.io to use and play
