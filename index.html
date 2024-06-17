@@ -4,7 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gravity Game made with replit</title>
+  <title>kaboomcrew.io</title>
+  <link rel="icon" type="image/x-icon" href="Boom.png">
   <style>
     #container {
       width: 100%;
@@ -101,8 +102,14 @@
           case 'ArrowLeft':
             movingLeft = true;
             break;
+          case 'a':
+            movingLeft = true
+            break;
           case 'ArrowRight':
             movingRight = true;
+            break;
+          case 'd' :
+            movingRight = true
             break;
         }
       });
@@ -112,8 +119,14 @@
           case 'ArrowLeft':
             movingLeft = false;
             break;
+          case 'a' :
+            movingLeft = false
+            break;
           case 'ArrowRight':
             movingRight = false;
+            break;
+          case 'd' :
+            movingRight = false
             break;
         }
       });
@@ -379,7 +392,7 @@
     }
 
     document.addEventListener('keydown', function (event) {
-      if (event.key === 'ArrowUp') {
+      if (event.key === 'ArrowUp' || event.key === "w") {
         if (jumdebounce == false) {
           gravityon = false
           jumdebounce = true;
@@ -387,6 +400,7 @@
 
           for (let i = 0; i < 150; i++) {
             setTimeout(() => (section.style.top = (parseInt(section.style.top) - 2.5) + 'px'), i);
+            
           }
           setTimeout(() => (gravityon = true), 500);
 
