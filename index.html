@@ -108,7 +108,7 @@
           case 'ArrowRight':
             movingRight = true;
             break;
-          case 'd' :
+          case 'd':
             movingRight = true
             break;
         }
@@ -119,13 +119,13 @@
           case 'ArrowLeft':
             movingLeft = false;
             break;
-          case 'a' :
+          case 'a':
             movingLeft = false
             break;
           case 'ArrowRight':
             movingRight = false;
             break;
-          case 'd' :
+          case 'd':
             movingRight = false
             break;
         }
@@ -174,10 +174,14 @@
         const element = killbricks.children[i];
         element.style.display = "none";
       }
+      const JP = document.getElementById("jumppads")
+      for (let i = 0; i < JP.children.length; i++) {
+        const element = JP.children[i];
+        element.style.display = "none";
+      }
     }
 
-    const section4214 = document.getElementById('moving-section');
-    section4214
+
 
     function lvl2() {
       document.getElementById("lvl1part1").style.display = 'none';
@@ -345,9 +349,14 @@
 
       }
     }
+
+    var isJumping = false
+    
     function checkgravity() {
-      if (gravityon == true) {
-        applyGravity()
+      if (isJumping === false) {
+        if (gravityon == true) {
+          applyGravity()
+        }
       }
       else { }
     }
@@ -391,18 +400,31 @@
 
     }
 
+
+
     document.addEventListener('keydown', function (event) {
       if (event.key === 'ArrowUp' || event.key === "w") {
         if (jumdebounce == false) {
+          isJumping = true
           gravityon = false
           jumdebounce = true;
           section.style.top = (parseInt(section.style.top) - 25) + 'px';
 
+          
+
           for (let i = 0; i < 150; i++) {
-            setTimeout(() => (section.style.top = (parseInt(section.style.top) - 2.5) + 'px'), i);
+
+
+
+            setTimeout(() => (section.style.top = (parseInt(section.style.top) - 2.5) + 'px'), i)
             
+
+
           }
-          setTimeout(() => (gravityon = true), 500);
+
+          setTimeout(() => (isJumping = false), 200);
+
+
 
         }
       }
