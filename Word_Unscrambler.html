@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Word Unscrambler</title>
+</head>
+<style>
+    body {
+        background-color: rgb(34, 127, 127);
+    }
+    .Frame {
+        height: 600px;
+        width: 600px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        background-color: rgb(255, 255, 255);
+        border-radius: 5px;
+        box-shadow: 5px 5px 6px rgb(57, 57, 57);
+    }
+    h1 {
+        font-family: "OCR A Std", monospace;
+        text-align: center;
+    }
+
+    .MenuButtons {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+    .MenuBtn {
+        width: 90%;
+        height: 40px;
+        font-family: "OCR A Std", monospace;
+    }
+    .CatagoryDisplay {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        font-family: "OCR A Std", monospace;
+    }
+    .Game {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%,-50%);
+        text-align: center;
+    }
+</style>
+<body>
+
+    <div class="UI">
+        <div class="Frame">
+            <div class="Menu">
+                    <h1>Scrambeled</h1>
+                    <div id="MainMenu" class="MenuButtons">
+                        <button class="MenuBtn" onclick="PickWord(); LaunchGame()">Play</button>
+                        <button class="MenuBtn" onclick="ShowCatagories()">Catagories</button>
+                    </div>
+            </div>
+            <div style="display: none;" id="Game" class="Game">
+                <p id="ScrambledwordSpace">Scrambled word</p>
+                <input id="input" autocomplete="off">
+                <button id="EnrButton" onclick="GuessedWord()">Enter</button>
+                <p id="SubSpace">SubText</p>
+                <br>
+                <button onclick="PickWord()" id="Next">Next</button>
+                <button onclick="Loss()" id="GU">Give up</button>
+                <br> <br>
+                <button onclick="Menu()" id="Return">Return</button>
+            </div>
+            <div style="display: none;" id="Catagories" class="WordsOptions">
+                <div class="MenuButtons">
+                    <button onclick="Menu()" style="background-color: darkgrey;" class="MenuBtn">Back</button>
+                        <button class="MenuBtn" onclick="ChangeWordsArray([
+        'Banana', 'Apples', 'Cherry', 'Burger', 'Donut', 'Hotdog', 'Fries',
+        'Pizza', 'Spaghetti', 'Tacos', 'Steak', 'Chicken Wings', 'Fried Rice', 'Sushi',
+        'Ramen', 'Ice Cream', 'Chocolate', 'Pancakes', 'Waffles', 'Croissant',
+        'Bagel', 'Omelette', 'Scrambled Eggs', 'Bacon', 'Sausage', 'Toast', 'Grilled Cheese',
+        'Quesadilla', 'Burrito', 'Nachos', 'Chili', 'Meatballs', 'Salad', 'Caesar Salad',
+        'Greek Salad', 'Avocado Toast', 'Smoothie', 'Milkshake', 'Yogurt', 'Granola',
+        'Cereal', 'Popcorn', 'Pretzel', 'Chips', 'Guacamole', 'Hummus', 'Falafel',
+        'Shawarma', 'Kebab', 'Lamb Chops', 'Roast Beef', 'Pulled Pork', 'Mac and Cheese',
+        'Mashed Potatoes', 'Baked Potato', 'Corn on the Cob', 'Stuffing', 'Green Beans',
+        'Brussels Sprouts', 'Broccoli', 'Cauliflower', 'Carrots', 'Peas', 'Zucchini',
+        'Spinach', 'Kale', 'Eggplant', 'Mushrooms', 'Tomato Soup', 'Clam Chowder',
+        'Chicken Noodle Soup', 'Lobster Bisque', 'Fish and Chips', 'Tuna Sandwich',
+        'Ham Sandwich', 'BLT', 'Club Sandwich', 'Reuben Sandwich', 'Philly Cheesesteak',
+        'Sloppy Joe', 'Cornbread', 'Biscuits', 'Muffin', 'Cupcake', 'Brownie',
+        'Apple Pie', 'Pumpkin Pie', 'Cheesecake', 'Tiramisu', 'Crepe', 'Donburi',
+        'Bibimbap', 'Kimchi', 'Pad Thai', 'Spring Rolls', 'Dumplings', 'Gyoza',
+        'Curry', 'Naan', 'Samosa', 'Biryani', 'Fajitas', 'Empanadas', 'Tamales'
+    ], this)">Foods</button>
+
+    <button class="MenuBtn" onclick="ChangeWordsArray([
+        'Lion', 'Tiger', 'Elephant', 'Giraffe', 'Zebra', 'Kangaroo', 'Koala',
+        'Panda', 'Sloth', 'Bear', 'Wolf', 'Fox', 'Rabbit', 'Deer',
+        'Hippopotamus', 'Rhinoceros', 'Crocodile', 'Alligator', 'Otter',
+        'Squirrel', 'Monkey', 'Gorilla', 'Chimpanzee', 'Orangutan',
+        'Dolphin', 'Whale', 'Shark', 'Octopus', 'Squid', 'Crab', 'Lobster',
+        'Penguin', 'Flamingo', 'Peacock', 'Ostrich', 'Eagle', 'Hawk', 'Parrot',
+        'Owl', 'Swan', 'Duck', 'Goose', 'Frog', 'Toad', 'Turtle', 'Lizard', 'Snake'
+    ], this)">Animals</button>
+
+    <button class="MenuBtn" onclick="ChangeWordsArray([
+        'United States', 'Canada', 'Mexico', 'Brazil', 'Argentina', 'UK', 'France', 'Germany',
+        'Italy', 'Spain', 'Portugal', 'Russia', 'China', 'Japan', 'South Korea', 'India',
+        'Australia', 'New Zealand', 'Egypt', 'South Africa', 'Kenya', 'Morocco', 'Nigeria',
+        'Turkey', 'Saudi Arabia', 'UAE', 'Iran', 'Pakistan', 'Bangladesh', 'Indonesia',
+        'Thailand', 'Vietnam', 'Philippines', 'Malaysia', 'Singapore', 'Greece', 'Sweden',
+        'Norway', 'Finland', 'Denmark', 'Netherlands', 'Belgium', 'Poland', 'Ukraine'
+    ], this)">Countries</button>
+
+    <button class="MenuBtn" onclick="ChangeWordsArray([
+        'Red', 'Blue', 'Green', 'Yellow', 'Orange', 'Purple', 'Pink', 'Black',
+        'White', 'Gray', 'Brown', 'Cyan', 'Magenta', 'Turquoise', 'Lavender',
+        'Gold', 'Silver', 'Beige', 'Maroon', 'Navy', 'Teal', 'Olive', 'Coral'
+    ], this)">Colors</button>
+
+    <button class="MenuBtn" onclick="ChangeWordsArray([
+        'Cat', 'Dog', 'Rabbit', 'Hamster', 'Guinea Pig', 'Parrot', 'Goldfish',
+        'Turtle', 'Lizard', 'Snake', 'Chinchilla', 'Hedgehog', 'Ferret',
+        'Budgie', 'Frog', 'Mouse', 'Rat', 'Axolotl', 'Koi Fish', 'Canary'
+    ], this)">Pets</button>
+
+
+                </div>
+            </div>
+            <p class="CatagoryDisplay" style="bottom: 50px;">Game streak: <a id="StreakText"></a></p>
+            <p class="CatagoryDisplay">Catagory selected: <a id="CatagoryDisplay">None</a></p>
+
+            <script>
+                const MM = document.getElementById("MainMenu");
+                const MG = document.getElementById("Game");
+                const Cata = document.getElementById("Catagories");
+
+                function Menu() {
+                    MM.style.display = "block";
+                    MG.style.display = "none";
+                    Cata.style.display = "none";
+                }
+                function LaunchGame() {
+                    MM.style.display = "none";
+                    MG.style.display = "block";
+                    Cata.style.display = "none";
+                    streak = 0;
+                    document.getElementById("StreakText").innerHTML = streak;
+                }
+                function ShowCatagories() {
+                    MM.style.display = "none";
+                    MG.style.display = "none";
+                    Cata.style.display = "block";
+                }
+            </script>
+        </div>
+    </div>
+
+
+</body>
+<script>
+    var streak = 0;
+
+    const WordsArray = ["Hello"];
+    let Currentword;
+    var Tries = 3;
+
+    const InputBar = document.getElementById("input");
+    const NextBtn = document.getElementById("Next");
+    const EntrBtn = document.getElementById("EnrButton");
+
+    NextBtn.disabled = true;
+    EntrBtn.disabled = false;
+
+    function ChangeWordsArray(Array, Element) {
+        for (let i = 0; i < Array.length; i++) {
+            let item = Array[i];
+            WordsArray[i] = item;
+        }
+        if (Element) {
+            document.getElementById("CatagoryDisplay").innerHTML = Element.innerHTML;
+        }
+    }
+
+    function ScrambleWord(str) {
+        const words = str.split(" ");
+        const scrambledWords = [];
+
+        for (let i = 0; i < words.length; i++) {
+            let arr = words[i].split("");
+
+            for (let j = 0; j < 11; j++) {
+                let idx1 = Math.floor(Math.random() * arr.length);
+                let idx2 = Math.floor(Math.random() * arr.length);
+                [arr[idx1], arr[idx2]] = [arr[idx2], arr[idx1]];
+            }
+
+            let scrambledWord = arr.join("");
+            scrambledWords.push(scrambledWord);
+        }
+
+        let scrambledWordsStr = scrambledWords.toString();
+        scrambledWordsStr = scrambledWordsStr.replace(",", " ");
+        return scrambledWordsStr;
+    }
+
+
+    function PickWord() {
+        var index = Math.floor(Math.random() * WordsArray.length);
+        let word = WordsArray[index];
+        let scrambled = ScrambleWord(word);
+        Currentword = word;
+        document.getElementById("ScrambledwordSpace").innerHTML = scrambled;
+        InputBar.value = "";
+        NextBtn.disabled = true;
+        EntrBtn.disabled = false;
+        Tries = 3;
+        document.getElementById("SubSpace").innerHTML = "Can you unscramble this word?";
+        document.getElementById("GU").disabled = false;
+        document.getElementById("Return").disabled = true;
+    }
+
+    function Loss() {
+        document.getElementById("GU").disabled = true;
+        document.getElementById("Return").disabled = false;
+        document.getElementById("Next").disabled = true;
+    }
+    
+    function GuessedWord() {
+        let Input = InputBar.value
+        if (Input.toLowerCase() == Currentword.toLowerCase()) {
+            document.getElementById("SubSpace").innerHTML = "Correct";
+            streak += 1;
+            document.getElementById("StreakText").innerHTML = streak;
+            NextBtn.disabled = false;
+            EntrBtn.disabled = true;
+        } else {
+            Tries -= 1;
+            document.getElementById("SubSpace").innerHTML = "Incorrect, " + Tries + " Tries left!";
+            if (Tries == 0) {
+                NextBtn.disabled = false;
+                EntrBtn.disabled = true;
+                Loss();
+            }
+        }
+    }
+</script>
+</html>

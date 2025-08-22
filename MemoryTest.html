@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Remember game</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+  <style>
+    html {
+      height: 100%;
+      width: 100%;
+    }
+    body {
+      background: linear-gradient(135deg, #2980b9, #6dd5fa, #ffffff);
+      background-size: 400% 400%;
+      animation: gradientAnimation 15s ease infinite; 
+    }
+    @keyframes gradientAnimation {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+      .main {
+        padding: 70px 0;
+        text-align: center;
+      }
+      .mainsec {
+        padding: 70px 0;
+        text-align: center;
+        height: 250px; 
+        width: 400px;
+        background-color: #33E7FF;
+        margin: auto;
+        border-radius: 50px;
+        border: 5px solid black;
+      }
+      .inputfield {
+        height: 25px; 
+        width: 50%;
+        border-radius: 50px;
+        border-style: solid;
+        border-width: 5px;
+        border-color: black;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        text-align: center;
+      }
+      .enterbutton {
+        height: 30px;
+        border-radius: 20px;
+        background-color: white;
+        border-style: solid;
+        border-width: 5px;
+        border-color: black;
+      }
+    .playbutton {
+      height: 50px;
+      width: 100px;
+      border-radius: 50px;
+      border: 5px solid black;
+      background-color: white;
+    }
+  </style>
+<body>
+  <script>
+    const cards = ["a","b","c","d","e"];
+
+    function shuffle(array) {
+      const newArray = array.slice(); // Create a copy of the original array
+      let currentIndex = newArray.length, randomIndex;
+      while (currentIndex > 0) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+        [newArray[currentIndex], newArray[randomIndex]] = [
+          newArray[randomIndex], newArray[currentIndex]
+        ];
+      }
+      return newArray;
+    }
+    var tries;
+
+    const input = document.getElementById("input");
+
+    var shuffledcards = [];
+
+
+    function ReRoll() {
+      setTimeout(() => {  let count = 0;
+       const interval = setInterval(() => {
+         document.getElementById("remembertext").innerHTML = shuffle(cards);
+         count++;
+         if (count >= 5) {
+           clearInterval(interval);
+         }
+       }, 1000);}, 3000)
+    }
+
+    function play() {
+
+      document.getElementById("playbutton").disabled = true;
+      document.getElementById("input").value = "";
+      tries = 3
+      document.getElementById("enterbutton").disabled = true;
+      shuffledcards = shuffle(cards);
+      console.log(shuffledcards);
+      document.getElementById("remembertext").innerHTML = shuffledcards;
+      document.getElementById("alerter").innerHTML = "3";
+
+      setTimeout(() => { document.getElementById("alerter").innerHTML = "2"; }, 1000);
+      setTimeout(() => { document.getElementById("alerter").innerHTML = "1"; }, 2000);
+      setTimeout(() => {document.getElementById("alerter").innerHTML = "tries left = "+tries;}, 3000)
+      ReRoll()
+      setTimeout(() => {document.getElementById("enterbutton").disabled = false;}, 8000)
+    }
+
+    function Check() {
+      console.log(shuffledcards)
+      if (document.getElementById("input").value == shuffledcards) {
+        console.log("CORRECT");
+        document.getElementById("playbutton").disabled = false;
+        if (tries == 3) {
+          document.getElementById("alerter").innerHTML = "WINNER! You took only 1 try!";
+        }
+        else if (tries == 2) {
+          document.getElementById("alerter").innerHTML = "WINNER! You took 2 tries";
+        }
+        else if (tries == 1) {
+          document.getElementById("alerter").innerHTML = "WINNER! You took 3 tries!";
+        }
+        else {
+          document.getElementById("alerter").innerHTML = "error";
+        }
+      }
+      else {
+        console.log("Incorrect");
+        document.getElementById("alerter").innerHTML = "Incorrect";
+        setTimeout(() => {document.getElementById("alerter").innerHTML = "tries left = "+tries;}, 500);
+        tries -= 1
+        if (tries == 0) {
+          document.getElementById("playbutton").disabled = false;
+          document.getElementById("alerter").innerHTML = "LOOSER! You ran out of tries";
+        }
+    } }
+  </script>
+  <div class="main" style="margin-left: auto; margin-right: auto; text-align: center; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;">
+    <section class="mainsec">
+      <h1>Memory game</h1>
+      <button id="playbutton" class="playbutton" onclick=play()>Play</button>
+      <p id="remembertext"></p>
+      <input autocomplete="off" type="text" class="inputfield" id="input">
+      <button id="enterbutton" class="enterbutton" onclick=Check()>enter</button>
+      <p id="alerter"></p>
+      <p>must be formatted like this, a,b,c,d,e</p>
+    </section>
+  </div>
+</body>
+</html>

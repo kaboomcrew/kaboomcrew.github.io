@@ -1,0 +1,197 @@
+body {
+  background-color: rgb(43, 41, 41);
+  margin-top: 425px;
+  overflow-x: hidden;
+  margin-left: 0;
+  padding: 0;
+}
+.Nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 65px;
+    width: 100%;
+    background-color: rgb(71, 65, 65);
+    box-shadow: -5px 5px 2px rgb(211, 211, 211, 0.3);
+    font-family: Arial, Helvetica, sans-serif;
+    z-index: 10000000;
+}
+
+h1 {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+li {
+  padding-top: 5px;
+  margin-right: 10px;
+  font-size: 23px;
+  font-weight: 900;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  color: white;
+  position: relative;
+  display: inline-block; 
+}
+
+li a {
+  text-align: left;
+  display: block;
+  padding: 8px;
+  padding-left: 10px;
+}
+.aNav:hover {
+  cursor: pointer;
+}
+.aNav::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: rgb(83, 100, 185);
+  transition: width 0.3s ease;
+}
+.aNav:hover::after {
+  width: 100%;
+}
+.aNav {
+    float: right;
+    text-align: right;
+}
+.SearchBar {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  height: 75%;
+  width: 40%;
+  border-radius: 25px;
+  padding-left: 20px;
+  background-color: rgb(38, 34, 34);
+  color: white;
+  border: none;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 15px;
+  font-weight: 900;
+  transition: 500ms ease-in-out;
+}
+.SearchBar::placeholder {
+  color: white;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-size: 15px;
+  font-weight: 900;
+  vertical-align: middle;
+}
+.SearchBar:focus::placeholder {
+  color: transparent;
+}
+.SiteImage {
+  width: 100%;
+  z-index: -1;
+  position: absolute;
+  top: 50px;
+  left: 0;
+}
+.Events {
+  height: fit-content;
+  padding: 50px;
+  width: 100%;
+  background-color: #0cc0df;
+  margin-left: 0;
+  padding-left: 0;
+}
+.EventTitle {
+  font-family: Arial, Helvetica, sans-serif;
+  color: white;
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+}
+.Games {
+  height: 300px;
+}
+.BeachTransition {
+  position: relative;
+  width: 100%;
+  height: 100px;
+  background: transparent;
+}
+
+.BeachMain {
+  position: absolute;
+  bottom: -70px;
+  left: 0;
+  width: 100%;
+  height: 90px;
+  background-color: #ffde59;
+  z-index: 0;
+}
+
+.Circle {
+  position: absolute;
+  bottom: -50px;
+  width: 10%;
+  height: 100px;
+  background-color: #ffde59;
+  border-radius: 50%;
+  z-index: 4;
+}
+.New {
+  height: fit-content;
+  padding: 50px;
+  width: 100%;
+  background-color: #51c100;
+  margin-left: 0;
+  padding-left: 0;
+  position: relative;
+  z-index: 2; 
+  margin-top: -50px; 
+}
+.Results {
+  height: auto;
+  width: 200px;
+  padding-left: 15px;
+  padding-right: 15px;
+  position: fixed;
+  top: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgb(40, 40, 40);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  padding: 20px;
+  z-index: 1000;
+
+}
+ul#results {
+    list-style: none;
+    padding: 0;
+    margin-top: 10px;
+}
+
+ul#results li {
+    margin: 8px 0;
+}
+
+ul#results li a {
+    display: block;
+    padding: 8px;
+    font-size: 15px;
+    background: #f2f2f2;
+    text-decoration: none;
+    color: #333;
+    border-radius: 4px;
+}
+
+ul#results li a:hover {
+    background: #e0e0e0;
+}

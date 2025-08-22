@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Kaboom's RNG</title>
+    <link rel="icon" type="image/x-icon"
+        href="https://www.canva.com/design/DAGeRu_-NW4/dDgGR5rLbzF7jHU4-6LQIQ/view?embed">
+    <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+<style>
+    body {
+        background: linear-gradient(180deg, #97f1fd, #d2ffff);
+        animation: gradient 15s ease infinite;
+        background-repeat: no-repeat;
+        height: 100vh;
+        width: 100%;
+        -webkit-user-select: none;
+        /* Safari */
+        -ms-user-select: none;
+        /* IE 10 and IE 11 */
+        user-select: none;
+        /* Standard syntax */
+        overflow: hidden;
+    }
+
+    @keyframes gradient {
+        0% {
+            background-position: 0% 50%;
+        }
+
+        50% {
+            background-position: 100% 50%;
+        }
+
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
+    .MainContent {
+        -webkit-user-select: none;
+        /* Safari */
+        -ms-user-select: none;
+        /* IE 10 and IE 11 */
+        user-select: none;
+        /* Standard syntax */
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-30%, -50%);
+        background-color: rgb(80, 252, 252);
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 40%;
+        height: 250px;
+
+        perspective: 1000px;
+        transform-style: preserve-3d;
+    }
+
+    .SpinButton {
+        -webkit-user-select: none;
+        /* Safari */
+        -ms-user-select: none;
+        /* IE 10 and IE 11 */
+        user-select: none;
+        /* Standard syntax */
+        position: fixed;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 10px;
+        height: 75px;
+        width: 300px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border: solid 2px rgb(78, 78, 78);
+        border-radius: 5px;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        background-color: rgba(255, 255, 255, 0.582);
+        font-size: 25px;
+        transition: background-color 0.2s ease;
+        /* Smooth hover transition */
+    }
+
+    @keyframes Animation {
+        0% {
+            transform: translate(-30%, -50%) rotateX(0deg);
+        }
+
+        50% {
+            transform: translate(-30%, -50%) rotateX(180deg);
+        }
+
+        100% {
+            transform: translate(-30%, -50%) rotateX(360deg);
+        }
+    }
+
+    @keyframes GoodSpin {
+        0% {
+            height: 250px;
+            width: 40%;
+        }
+
+        25% {
+            height: 300px;
+            width: 50%;
+        }
+
+        50% {
+            height: 250px;
+            width: 40%;
+        }
+
+        75% {
+            height: 300px;
+            width: 50%;
+        }
+
+        100% {
+            height: 250px;
+            width: 40%;
+        }
+    }
+
+    .SpinButton:hover {
+        background-color: rgb(172, 225, 238);
+    }
+
+    .Breathe {
+        animation: GoodSpin 1s infinite;
+    }
+
+    /* Animation applied to target elements only */
+    .animate {
+        animation: Animation 1s forwards;
+    }
+
+    .Text {
+        -webkit-user-select: none;
+        /* Safari */
+        -ms-user-select: none;
+        /* IE 10 and IE 11 */
+        user-select: none;
+        /* Standard syntax */
+        font-family: cursive;
+        color: white;
+        font-size: 40px;
+        text-align: center;
+        -webkit-text-stroke: black 1px;
+    }
+
+    .Topsec {
+        font-family: cursive;
+        width: 300px;
+        height: 260px;
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgb(82, 82, 82);
+        text-align: center;
+    }
+
+    .Padding {
+        padding-left: 50px;
+    }
+
+    .BottomSection {
+        position: absolute;
+        bottom: 20px;
+        padding-bottom: 10px;
+        height: fit-content;
+        width: 300px;
+        background-color: white;
+        font-family: cursive;
+        text-align: center;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgb(82, 82, 82);
+    }
+
+    .UpgradeButton {
+        height: 40px;
+        width: 250px;
+        background-color: rgb(104, 192, 214);
+        border-radius: 10px;
+        border: none;
+        box-shadow: 0 0 10px rgb(82, 82, 82);
+        transition: 0.1s ease;
+    }
+
+    .UpgradeButton:hover {
+        background-color: rgb(180, 217, 226);
+        height: 50px;
+        width: 260px;
+    }
+
+    .UpgradeButton:active {
+        background-color: rgb(31, 184, 223);
+        height: 40px;
+        width: 250px;
+    }
+</style>
+
+<body>
+    <div class="animate"></div>
+    <header class="Topsec">
+        <h2 style="position: fixed; top: 0; left: 50%; transform: translateX(-30%);">Credits: <a id="Credits">0</a></h2>
+        <h2>best Spins:</h2>
+        <p id="A">Spin to see! 0</p>
+        <p id="B">Spin to see! 0</p>
+        <p id="C">Spin to see! 0</p>
+        <p id="D">Spin to see! 0</p>
+        <p id="E">Spin to see! 0</p>
+    </header>
+    <footer class="BottomSection">
+        <h2>Spin Shop</h2>
+        <button id="buttonA" class="UpgradeButton" onclick="UpgradeChances()">Better Spins C<a
+                id="buttonAprice">10</a></button>
+        <p></p>
+        <button id="buttonB" class="UpgradeButton" onclick="UpgradeCoins()">More Credits C<a
+                id="buttonBprice">50</a></button>
+        <p></p>
+        <button id="buttonC" class="UpgradeButton" onclick="UpgradeSpeed()">Faster Spins C<a
+                id="buttonCprice">100</a></button>
+    </footer>
+    <div class="Padding">
+        <div class="MainContent" id="centerdiv">
+            <p class="Text" id="DisplayText">Press spin to roll!</p>
+            <button class="SpinButton" id="SpinButton" onclick="Spin()">Spin</button>
+        </div>
+    </div>
+
+
+    <script>
+        var Credits = 0;
+
+
+        var Unobtainable = 1016;
+        var Exotic = 1005;
+        var Mythic = 975;
+        var legendary = 900;
+        var Epic = 800;
+        var Uncommon = 500;
+
+        var Upgrade1Price = 10;
+        var Upgrade2Price = 50;
+        var Upgrade3price = 100;
+
+        var coinsMultiplier = 1;
+        var animationSpeed = 1;
+
+
+        function UpdateCredits() {
+            document.getElementById("Credits").innerHTML = Credits;
+            document.getElementById("buttonAprice").innerHTML = Upgrade1Price;
+            document.getElementById("buttonBprice").innerHTML = Upgrade2Price;
+            document.getElementById("buttonCprice").innerHTML = Upgrade3price;
+        }
+        setInterval(UpdateCredits, 100)
+
+
+        document.getElementById('SpinButton').addEventListener('click', function () {
+            const mainContent = document.querySelector('.MainContent'); // Target MainContent
+            mainContent.style.animation = `Animation ${animationSpeed}s forwards`;
+            document.getElementById("SpinButton").disabled = true;
+            document.getElementById("DisplayText").style.display = "none";
+            setTimeout(() => {
+                document.getElementById("DisplayText").style.display = "block";
+            }, 200);
+
+            // Remove the animation class after it completes
+            mainContent.addEventListener('animationend', function () {
+                mainContent.style.animation = "none";
+                document.getElementById("SpinButton").disabled = false;
+            }, { once: true });
+        });
+
+
+
+        function PlayRareAnimation() {
+            const mainContent = document.getElementById("centerdiv");
+            mainContent.style.animation = "GoodSpin 1s infinite";
+        }
+
+        function StopAnimation() {
+            const mainContent = document.getElementById("centerdiv");
+            mainContent.style.animation = "none";
+        }
+
+
+
+
+        let Debounce1 = false;
+        function UpgradeChances() {
+            if (Credits >= Upgrade1Price) {
+                var ChanceIncrease = 2;
+                if (Uncommon >= 100) {
+                    Exotic -= ChanceIncrease;
+                    Mythic -= ChanceIncrease;
+                    legendary -= ChanceIncrease;
+                    Epic -= ChanceIncrease;
+                    Uncommon -= ChanceIncrease;
+
+                    Credits -= Upgrade1Price;
+                    Upgrade1Price += 5;
+
+                } else {
+                    if (Debounce1 == false) {
+                        const button = document.getElementById("buttonA");
+                        let buttonhtml = button.innerHTML;
+
+                        button.innerHTML = "Max level Reached!"
+                        Debounce1 = true;
+                        setTimeout(() => {
+                            button.innerHTML = buttonhtml;
+                            Debounce1 = false;
+                        }, 600);
+                    }
+                }
+            } else {
+                if (Debounce1 == false) {
+                    const button = document.getElementById("buttonA");
+                    let buttonhtml = button.innerHTML;
+
+                    button.innerHTML = "Not enough credits!"
+                    Debounce1 = true;
+                    setTimeout(() => {
+                        button.innerHTML = buttonhtml;
+                        Debounce1 = false;
+                    }, 600);
+                }
+            }
+
+        }
+
+        let Debounce2 = false;
+        function UpgradeCoins() {
+            if (Credits >= Upgrade2Price) {
+                coinsMultiplier += 1;
+                
+                Credits -= Upgrade2Price;
+                Upgrade2Price += 25;
+            } else {
+                if (Debounce2 == false) {
+                    const button = document.getElementById("buttonB");
+                    let buttonhtml = button.innerHTML;
+
+                    button.innerHTML = "Not enough credits!"
+                    Debounce2 = true;
+                    setTimeout(() => {
+                        button.innerHTML = buttonhtml;
+                        Debounce2 = false;
+                    }, 600);
+                }
+            }
+        }
+
+
+        let Debounce3 = false;
+        function UpgradeSpeed() {
+            if (Credits >= Upgrade3price) {
+                if (animationSpeed || 0.1) {
+                    animationSpeed = Math.max(0.1, animationSpeed - 0.05);
+                    Credits -= Upgrade3price;
+                    Upgrade3price += 100;
+
+                } else {
+                    if (Debounce3 == false) {
+                        const button = document.getElementById("buttonB");
+                        let buttonhtml = button.innerHTML;
+
+                        button.innerHTML = "Max Level Reached!";
+                        Debounce3 = true;
+                        setTimeout(() => {
+                            button.innerHTML = buttonhtml;
+                            Debounce3 = false;
+                        }, 600);
+                    }
+                }
+            } else {
+                if (Debounce3 == false) {
+                    const button = document.getElementById("buttonC");
+                    let buttonhtml = button.innerHTML;
+
+                    button.innerHTML = "Not enough credits!"
+                    Debounce3 = true;
+                    setTimeout(() => {
+                        button.innerHTML = buttonhtml;
+                        Debounce3 = false;
+                    }, 600);
+                }
+            }
+        }
+
+
+
+
+
+        let names = [
+            "Ancient Diary",
+            "Torn Scroll",
+            "Forgotten Relic",
+            "Lost Scroll",
+            "Mysterious Book",
+            "Ancient Artifact",
+            "Lost Relic",
+            "Hidden Archive",
+            "Dirty Picture",
+            "Anchient Script",
+            "Sacred Codex",
+            "Ethereal Tablet",
+            "Dusty Chronicle",
+            "Enchanted Tome",
+            "Obscure Manuscript",
+            "Runic Inscription",
+            "Forgotten Codex",
+            "Hidden Ledger",
+            "Worn Parchment",
+            "Cursed Relic",
+            "Mystic Grimoire",
+            "Shadowed Compendium",
+            "Sealed Scroll",
+            "Cryptic Inscription",
+            "Ancient Map",
+            "Hollowed Chronicle",
+            "Shattered Relic",
+            "Veiled Tablet",
+            "Arcane Fragment",
+            "Pristine Relic",
+            "Death scroll",
+            "Gamblers scroll",
+            "Rift Relic",
+            "Ancient Dictionary",
+            "limitless scroll",
+            "red glory stone",
+            "fallen samurais relic",
+            "legendary chromatic skull",
+            "skull of the king",
+            "Honored Ones Glory",
+            "Death note",
+            "Devs Domain???",
+            "Kabooms Relic",
+            "ERROR_CODE"
+        ];
+
+
+
+
+        const BestSpinA = document.getElementById("A");
+        const BestSpinB = document.getElementById("B");
+        const BestSpinC = document.getElementById("C");
+        const BestSpinD = document.getElementById("D");
+        const BestSpinE = document.getElementById("E");
+
+
+
+
+
+
+        function Spin() {
+            StopAnimation()
+
+            let name = names[Math.floor(Math.random() * names.length)];
+            let ResultString = "";
+
+            let RandomNum = Math.floor(Math.random() * 1018);
+
+            var round = 0
+
+            const centerdiv = document.getElementById("centerdiv");
+
+
+
+            if (RandomNum > Exotic) {
+                var DiscoveryChance = (Math.floor(Math.random() * 100) + 500) * Math.floor(Math.random() * 2000);
+
+                ResultString = `Unobtainable ${name} (1 in ${DiscoveryChance})`;
+
+
+                UpdateLeaderBoard("Unobtainable", name, DiscoveryChance, "#DC2367");
+
+                PlayRareAnimation()
+
+                Credits += 30 * coinsMultiplier;
+
+
+                const DisplayText = document.getElementById("DisplayText");
+                DisplayText.innerHTML = ResultString;
+
+                centerdiv.style.backgroundColor = "#DC2367";
+
+            } else if (RandomNum > Exotic && RandomNum < 1016) {
+
+                var DiscoveryChance = (Math.floor(Math.random() * 100) + 400) * Math.floor(Math.random() * 500);
+
+                ResultString = `Exotic ${name} (1 in ${DiscoveryChance})`;
+
+
+                UpdateLeaderBoard("Exotic", name, DiscoveryChance, "#7B241C");
+
+                Credits += 20 * coinsMultiplier;
+
+                PlayRareAnimation()
+
+
+                const DisplayText = document.getElementById("DisplayText");
+                DisplayText.innerHTML = ResultString;
+
+                centerdiv.style.backgroundColor = "#7B241C";
+
+            } else if (RandomNum > Mythic && RandomNum < Exotic) {
+
+                var DiscoveryChance = (Math.floor(Math.random() * 100) + 300) * Math.floor(Math.random() * 100);
+
+                ResultString = `Mythic ${name} (1 in ${DiscoveryChance})`;
+
+
+                UpdateLeaderBoard("Mythic", name, DiscoveryChance, "#D35400");
+
+                Credits += 15 * coinsMultiplier;
+
+                PlayRareAnimation()
+
+
+                const DisplayText = document.getElementById("DisplayText");
+                DisplayText.innerHTML = ResultString;
+
+                centerdiv.style.backgroundColor = "#D35400";
+
+            } else if (RandomNum > legendary && RandomNum < Mythic) {
+
+                var DiscoveryChance = (Math.floor(Math.random() * 100) + 250) * Math.floor(Math.random() * 50);
+
+                ResultString = `Legendary ${name} (1 in ${DiscoveryChance})`;
+
+
+                UpdateLeaderBoard("Legendary", name, DiscoveryChance, "#947b19");
+
+                Credits += 10 * coinsMultiplier;
+
+                PlayRareAnimation()
+
+
+                const DisplayText = document.getElementById("DisplayText");
+                DisplayText.innerHTML = ResultString;
+
+                centerdiv.style.backgroundColor = "#F1C40F";
+
+            } else if (RandomNum > Epic && RandomNum < legendary) {
+
+                var DiscoveryChance = (Math.floor(Math.random() * 100) + 100) * Math.floor(Math.random() * 30);
+
+                ResultString = `Epic ${name} (1 in ${DiscoveryChance})`;
+
+
+                UpdateLeaderBoard("Epic", name, DiscoveryChance, "#2471A3");
+
+                Credits += 5 * coinsMultiplier;
+
+                const DisplayText = document.getElementById("DisplayText");
+                DisplayText.innerHTML = ResultString;
+
+                centerdiv.style.backgroundColor = "#2471A3";
+
+            } else if (RandomNum > Uncommon && RandomNum < Epic) {
+
+                var DiscoveryChance = Math.floor(Math.random() * 100) * Math.floor(Math.random() * 10);
+
+                ResultString = `Uncommon ${name} (1 in ${DiscoveryChance})`;
+
+
+                UpdateLeaderBoard("Uncommon", name, DiscoveryChance, "#27AE60");
+
+                Credits += 2 * coinsMultiplier;
+
+                const DisplayText = document.getElementById("DisplayText");
+                DisplayText.innerHTML = ResultString;
+
+                centerdiv.style.backgroundColor = "#27AE60";
+
+            } else if (RandomNum < Uncommon) {
+
+                var DiscoveryChance = Math.floor(Math.random() * 100);
+
+                ResultString = `Common ${name} (1 in ${DiscoveryChance})`;
+
+
+                UpdateLeaderBoard("Common", name, DiscoveryChance, "#AAAAAA");
+
+                Credits += 1 * coinsMultiplier;
+
+                const DisplayText = document.getElementById("DisplayText");
+                DisplayText.innerHTML = ResultString;
+
+                centerdiv.style.backgroundColor = "#AAAAAA";
+
+            }
+
+
+
+
+
+
+
+        }
+
+        function findnum(string) {
+            if (!string) return 0; // Handle empty string
+            let stringlist = string.split(" ");
+            let num = stringlist[stringlist.length - 1];
+            num = num.replace(")", "");
+            return parseInt(num) || 0; // Ensure it returns a number
+        }
+
+        function UpdateLeaderBoard(Rareity, name, Varin, color) {
+            if (Varin > findnum(BestSpinA.innerHTML)) {
+                BestSpinE.innerHTML = BestSpinD.innerHTML
+                BestSpinE.style.color = BestSpinD.style.color
+
+                BestSpinD.innerHTML = BestSpinC.innerHTML
+                BestSpinD.style.color = BestSpinC.style.color
+
+                BestSpinC.innerHTML = BestSpinB.innerHTML
+                BestSpinC.style.color = BestSpinB.style.color
+
+                BestSpinB.innerHTML = BestSpinA.innerHTML
+                BestSpinB.style.color = BestSpinA.style.color
+
+                BestSpinA.innerHTML = Rareity + " " + name + " (1 in " + Varin + ")";
+                BestSpinA.style.color = color;
+                return;
+            }
+            if (Varin > findnum(BestSpinB.innerHTML)) {
+                BestSpinE.innerHTML = BestSpinD.innerHTML
+                BestSpinE.style.color = BestSpinD.style.color
+
+                BestSpinD.innerHTML = BestSpinC.innerHTML
+                BestSpinD.style.color = BestSpinC.style.color
+
+                BestSpinC.innerHTML = BestSpinB.innerHTML
+                BestSpinC.style.color = BestSpinB.style.color
+
+                BestSpinB.innerHTML = Rareity + " " + name + " (1 in " + Varin + ")";
+                BestSpinB.style.color = color;
+                return;
+            }
+            if (Varin > findnum(BestSpinC.innerHTML)) {
+                BestSpinE.innerHTML = BestSpinD.innerHTML
+                BestSpinE.style.color = BestSpinD.style.color
+
+                BestSpinD.innerHTML = BestSpinC.innerHTML
+                BestSpinD.style.color = BestSpinC.style.color
+
+                BestSpinC.innerHTML = Rareity + " " + name + " (1 in " + Varin + ")";
+                BestSpinC.style.color = color;
+                return;
+            }
+            if (Varin > findnum(BestSpinD.innerHTML)) {
+                BestSpinE.innerHTML = BestSpinD.innerHTML
+                BestSpinE.style.color = BestSpinD.style.color
+
+                BestSpinD.innerHTML = Rareity + " " + name + " (1 in " + Varin + ")";
+                BestSpinD.style.color = color;
+                return;
+            }
+            if (Varin > findnum(BestSpinE.innerHTML)) {
+                BestSpinE.innerHTML = Rareity + " " + name + " (1 in " + Varin + ")";
+                BestSpinE.style.color = color;
+                return;
+            }
+        }
+
+
+    </script>
+</body>
+
+</html>

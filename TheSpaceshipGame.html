@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>The Spaceship Game</title>
+    <link rel="stylesheet" href="../Scripts/style.css">
+    <link rel="icon" href="../Images/Favicon.png" type="image/x-icon">
+  </head>
+  <body>
+        <nav class="Nav">
+          <ul>
+            <li><a>Kaboomcrew.github.io</a></li>
+            <li class="aNav"><a style="color: white; text-decoration: none;" href="../Pages/UpdateLogs.html">Update logs</a></li>
+            <li class="aNav"><a style="color: white; text-decoration: none;" href="../index.html">Home</a></li>
+            <input class="SearchBar" placeholder="Search &#128269;" type="search" id="searchInput"></input>
+          </ul>
+        </nav>
+        <ul class="Results" id="results"></ul>
+        <script src="../Scripts/script.js"></script>
+
+
+<style>
+  body {
+    padding: 0;
+    margin: 0;
+  }
+  .Spaceship {
+    position: fixed;
+    height: 190px;
+    width: 100px;
+    bottom: 0;
+    left: 50%;
+  }
+
+  .Mainbody {
+    top: 101px;
+    width: 100px;
+    height: 125px;
+    background-color: gray;
+  }
+
+  .Arm1 {
+    height: 65px;
+    width: 20px;
+    left: 1px;
+    background-color: lightgray;
+    border: 5px solid grey;
+  }
+
+  .Arm2 {
+    position: absolute;
+    height: 65px;
+    width: 20px;
+    top: 0;
+    right: 0;
+    background-color: lightgray;
+    border: 5px solid grey;
+  }
+
+  .Window {
+    position: absolute;
+    height: 20px;
+    width: 60px;
+    top: 66px;
+    left: 15px;
+    background-color: lightblue;
+    border: 5px solid grey;
+  }
+
+  .LowerBody {
+    position: absolute;
+    width: 75px;
+    height: 75px;
+    background-color: grey;
+    top: 100px;
+    left: 7px;
+    border: lightgray solid 5px;
+    border-radius: 2px;
+  }
+
+  .Container {
+    position: fixed;
+    height: 40vh;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+  }
+
+  .Coin {
+    position: fixed;
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    background-color: gold;
+    border: yellow 10px solid;
+    display: flex;
+    /* Enables Flexbox */
+    align-items: center;
+    /* Vertical alignment */
+    justify-content: center;
+    /* Horizontal alignment */
+  }
+
+  .MoneySimble {
+    color: white;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    text-align: center;
+    font-size: 50px;
+  }
+
+  .astraroid {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 300px;
+    width: 150px;
+    display: none;
+  }
+
+  .meteor {
+    position: relative;
+    width: 100px;
+    height: 100px;
+  }
+
+  .fire {
+    position: absolute;
+    top: 0;
+    left: 25%;
+    width: 50%;
+    height: 70%;
+    background-color: orange;
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  }
+
+  .rock {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 60%;
+    background: gray;
+    border-radius: 50%;
+    box-shadow: inset -5px -5px 0px rgba(0, 0, 0, 0.3);
+  }
+
+  .rock::before {
+    content: "";
+    position: absolute;
+    top: 20%;
+    left: 15%;
+    width: 15%;
+    height: 15%;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 50%;
+  }
+
+  .rock::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 20%;
+    width: 12%;
+    height: 12%;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 50%;
+  }
+
+  .Star {
+    position: fixed;
+    height: 10px;
+    width: 10px;
+    background-color: white;
+    border-radius: 50%;
+    border: none;
+  }
+
+  body {
+    background-color: #000000;
+  }
+
+  /* Styling for the Game Over UI */
+  .UiMain {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    /* Full screen height */
+    background: linear-gradient(45deg, #1e1e2f, #3b3b52);
+    /* Gradient background */
+    color: #ffffff;
+    /* Text color */
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    gap: 20px;
+    /* Spacing between elements */
+  }
+
+  /* Game Over Header */
+  .UiMain h2 {
+    font-size: 3rem;
+    /* Large font size for "You Died" */
+    font-weight: bold;
+    color: #ff4e4e;
+    /* Bright red for emphasis */
+    text-shadow: 0px 4px 10px rgba(255, 78, 78, 0.7);
+    /* Glow effect */
+  }
+
+  /* Score Display */
+  .UiMain h3 {
+    font-size: 1.5rem;
+    color: #f0f0f0;
+    /* Slightly off-white for better readability */
+  }
+
+  .UiMain h3 span {
+    color: #ffd700;
+    /* Gold color for the score value */
+    font-weight: bold;
+  }
+
+  /* Button Styling */
+  .UiMain button {
+    background-color: #4caf50;
+    /* Green button */
+    color: #ffffff;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 8px;
+    /* Rounded corners */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    /* Subtle shadow */
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  /* Button Hover Effect */
+  .UiMain button:hover {
+    transform: scale(1.05);
+    /* Slightly grow */
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.4);
+    /* Larger shadow */
+  }
+
+  .UiMain button:active {
+    transform: scale(0.95);
+    /* Slightly shrink */
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    /* Reduce shadow */
+  }
+
+  #MobileControls {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px;
+    border-radius: 10px;
+    padding: 20px;
+  }
+
+  #MobileControls #Row {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  button.Control {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+
+  button.Control:hover {
+    background-color: #0056b3;
+    transform: scale(1.1);
+  }
+
+  button.Control:active {
+    background-color: #003f7f;
+    transform: scale(1);
+  }
+
+  #MobileControls .BR {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+
+  /* Additional responsiveness for smaller screens */
+  @media (max-width: 600px) {
+    #MobileControls {
+      padding: 10px;
+    }
+
+    button.Control {
+      font-size: 16px;
+      padding: 8px 15px;
+    }
+  }
+
+  .Control {
+    user-select: none;
+  }
+
+  .Hearts {
+    position: fixed;
+    top: 75px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .Heart {
+    color: red;
+    font-size: 50px;
+  }
+
+  .loader {
+    border: 16px solid #f3f3f3;
+    border-top: 16px solid #ff4e4e;
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  .Medkit {
+    color: red;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    font-size: 100px;
+  }
+</style>
+
+<body>
+  <div style="display: flex;" class="UiMain" id="Loader">
+    <div class="loader"></div>
+    <h3>
+      Loading...
+      (approx: 10 seconds)
+    </h3>
+    <h3>
+      Tip: Use the arrow keys to move!
+    </h3>
+  </div>
+  <div id="Ui" class="UiMain">
+    <h2>You Died</h2>
+    <h3>Score: <span id="Score">0</span></h3>
+    <button onclick="Replay()">Play Again</button>
+  </div>
+  <div id="UiStart" class="UiMain">
+    <h2>The spaceship game!</h2>
+    <h3>How many coins can you collect without crashing into the astaroids!</h3>
+    <button onclick="Replay()">Play</button>
+  </div>
+
+
+  <div style="display: none;" class="Container" id="container">
+    <span
+      style="width: 60px; height: 15px; background-color: white; border-radius: 5px; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen;">
+      <a class="Point">Points: <a id="Points"></a></a>
+    </span>
+
+    <div id="Spaceship" class="Spaceship">
+      <div class="Arm1"></div>
+      <div class="Arm2"></div>
+      <div class="Mainbody">
+        <div class="Window"></div>
+        <div class="LowerBody"></div>
+      </div>
+    </div>
+    <div id="Coins">
+      <div class="Coin" id="Coin1">
+        <p class="MoneySimble">$</p>
+      </div>
+      <div class="Coin" id="Coin2">
+        <p class="MoneySimble">$</p>
+      </div>
+      <div class="Coin" id="Coin3">
+        <p class="MoneySimble">$</p>
+      </div>
+
+      <div class="Star" id="Star1"></div>
+      <div class="Star" id="Star2"></div>
+      <div class="Star" id="Star3"></div>
+      <div class="Star" id="Star4"></div>
+      <div class="Star" id="Star5"></div>
+      <div class="Star" id="Star6"></div>
+      <div class="Star" id="Star7"></div>
+
+      <div class="Medkit" id="Medkit">&hearts;</div>
+
+
+
+    </div>
+    <div class="astraroid" id="astaroid">
+      <div class="fire"></div>
+      <div class="rock"></div>
+    </div>
+    <div id="AstaroidContainer"></div>
+  </div>
+
+  <div class="MC" id="MobileControls">
+    <div class="BR" id="Row">
+      <button oncontextmenu="return false;" class="Control" id="AU">&#11165;</button>
+    </div>
+    <div id="Row">
+      <button oncontextmenu="return false;" class="Control" id="AL">&#11164;</button>
+      <button oncontextmenu="return false;" class="Control" id="AD">&#11167;</button>
+      <button oncontextmenu="return false;" class="Control" id="AR">&#11166;</button>
+    </div>
+  </div>
+
+  <div id="Hearts" class="Hearts">
+    <div class="Heart" id="Heart1">&hearts;</div>
+    <div class="Heart" id="Heart2">&hearts;</div>
+    <div class="Heart" id="Heart3">&hearts;</div>
+  </div>
+
+
+  <script>
+    /* Loading Symbol at start */
+    setTimeout(() => {
+      document.getElementById("Loader").style.display = "none";
+      document.getElementById("UiStart").style.display = "flex";
+    }, 1000);
+
+
+    var hearts = 3;
+    let movingLeft = false;
+    let movingRight = false;
+    let movingUp = false;
+    let movingDown = false;
+
+    let Coins = ["Coin1", "Coin2", "Coin3", "Star1", "Star2", "Star3", "Star4", "Star5", "Star6", "Star7", "Medkit"];
+    let MedkitSpawned = false;
+
+    function AnimateCoins() {
+      if (MedkitSpawned == false) {
+        if (hearts <= 2) {
+          if (Math.floor(Math.random() * 100) >= 98) {
+            document.getElementById("Medkit").style.display = "block";
+            MedkitSpawned = true;
+          }
+        }
+      }
+      for (let i = 0; i < Coins.length; i++) {
+        let Coin = document.getElementById(Coins[i]);
+        // Update the coin's position
+        Coin.style.top = Number((Coin.style.top).replace("px", "")) + 4 + "px";
+
+        // Get the bounding rectangle of the coin
+        let rect = Coin.getBoundingClientRect();
+
+        // Check if the coin is out of the viewport
+        if (rect.top > window.innerHeight) {
+          if (Coins[i].includes("Star")) {
+            Coin.style.top = `${Math.random() * 500}px`; // Spread out stars vertically by starting at a random top position
+          } else {
+            Coin.style.top = "0px"
+          }
+          Coin.style.left = Math.floor(Math.random() * 100) + "%";
+          if (Coins[i] == "Medkit") {
+            Coin.style.display = "none";
+            MedkitSpawned = false;
+          }
+        }
+      }
+    }
+
+    function AnimateAsteroid() {
+      let asteroid = document.getElementById("astaroid");
+
+      // Check if the random chance occurs
+      if (Math.floor(Math.random() * 100) <= 3) {
+        let newAsteroid = asteroid.cloneNode(true)
+        const Container = document.getElementById("AstaroidContainer")
+        Container.appendChild(newAsteroid)
+        newAsteroid.style.display = "block"; // Show the asteroid
+        newAsteroid.style.left = Math.floor(Math.random() * 100) + "%"; // Random horizontal position
+        newAsteroid.style.top = "0px"; // Start at the top
+
+        // Animate the asteroid downwards
+        for (let i = 0; i < 1000; i++) {
+          setTimeout(() => {
+            newAsteroid.style.top = i + "px"; // Move downward
+            if (i == 999) {
+              newAsteroid.remove()
+            }
+          }, i * 2 + 100); // Control the speed of the animation
+        }
+      }
+    }
+
+
+    setInterval(AnimateAsteroid, 100)
+
+    const Controls = document.getElementById("MobileControls");
+    Controls.style.display = "none";
+
+    addEventListener('touchstart', function (event) {
+      Controls.style.display = "flex";
+    });
+
+    addEventListener('keydown', function (event) {
+      Controls.style.display = "none";
+    });
+
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const section = document.getElementById('Spaceship');
+      const container = document.getElementById('container');
+      const step = 2; // Number of pixels to move on each frame
+
+      function moveSection() {
+        const containerRect = container.getBoundingClientRect();
+        const sectionRect = section.getBoundingClientRect();
+
+        let newPositionX = section.offsetLeft;
+        let newPositionY = section.offsetTop;
+
+        if (movingLeft) newPositionX -= step;
+        if (movingRight) newPositionX += step;
+        if (movingUp) newPositionY -= step;
+        if (movingDown) newPositionY += step;
+
+        // Ensure section does not move outside the container
+        if (newPositionX < 0) newPositionX = 0;
+        if (newPositionY < 0) newPositionY = 0;
+        if (newPositionX + sectionRect.width > containerRect.width) newPositionX = containerRect.width - sectionRect.width;
+        if (newPositionY - sectionRect.height > containerRect.height) newPositionY = containerRect.height + sectionRect.height;
+
+        section.style.left = newPositionX + 'px';
+        section.style.top = newPositionY + 'px';
+      }
+
+      document.addEventListener('keydown', function (event) {
+        switch (event.key) {
+          case 'ArrowLeft':
+            movingLeft = true;
+            break;
+          case 'ArrowRight':
+            movingRight = true;
+            break;
+          case 'ArrowUp':
+            movingUp = true;
+            break;
+          case 'ArrowDown':
+            movingDown = true;
+            break;
+        }
+      });
+
+      document.addEventListener('keyup', function (event) {
+        switch (event.key) {
+          case 'ArrowLeft':
+            movingLeft = false;
+            break;
+          case 'ArrowRight':
+            movingRight = false;
+            break;
+          case 'ArrowUp':
+            movingUp = false;
+            break;
+          case 'ArrowDown':
+            movingDown = false;
+            break;
+        }
+      });
+
+      // Continuously move the section
+      setInterval(moveSection, 2);
+      setInterval(AnimateCoins, 10)
+    });
+
+    var Points = 0;
+
+    let debounce = false;
+
+    function checkCoinCollision() {
+      const coinElements = document.querySelectorAll('.Coin');
+      const spaceshipElement = document.getElementById('Spaceship');
+      const astaroid = document.getElementById('astaroid');
+
+      coinElements.forEach(coinElement => {
+        const coinRect = coinElement.getBoundingClientRect();
+        const spaceshipRect = spaceshipElement.getBoundingClientRect();
+
+        if (
+          coinRect.left < spaceshipRect.right &&
+          coinRect.right > spaceshipRect.left &&
+          coinRect.top < spaceshipRect.bottom &&
+          coinRect.bottom > spaceshipRect.top
+        ) {
+          // Coin collision detected
+
+          coinElement.style.top = "0px";
+          coinElement.style.left = Math.floor(Math.random() * 100) + "%";
+          Points += 1;
+          document.getElementById("Points").innerHTML = Points;
+        }
+      });
+      const Astaroids = document.querySelectorAll(".astraroid");
+
+      for (let i = 0; i < Astaroids.length; ++i) {
+        const asteroidRect = Astaroids[i].getBoundingClientRect();
+        const spaceshipRect = spaceshipElement.getBoundingClientRect();
+
+        if (
+          asteroidRect.left < spaceshipRect.right &&
+          asteroidRect.right > spaceshipRect.left &&
+          asteroidRect.top < spaceshipRect.bottom &&
+          asteroidRect.bottom > spaceshipRect.top
+        ) {
+          console.log("Hi")
+
+          if (debounce == false) {
+            if (hearts == 3) {
+              document.getElementById("Heart3").style.color = "grey";
+              debounce = true;
+              setTimeout(() => {
+                debounce = false;
+              }, 1000);
+            }
+            if (hearts == 2) {
+              document.getElementById("Heart2").style.color = "grey";
+              debounce = true;
+              setTimeout(() => {
+                debounce = false;
+              }, 1000);
+            }
+            if (hearts == 1) {
+              document.getElementById("Heart1").style.color = "grey";
+              debounce = true;
+              setTimeout(() => {
+                debounce = false;
+              }, 1000);
+              document.getElementById("Ui").style.display = "flex";
+              document.getElementById("container").style.display = "none";
+              document.getElementById("Score").innerHTML = Points;
+            }
+            hearts -= 1;
+          }
+
+
+        }
+      }
+
+
+      const Medkit = document.getElementById("Medkit");
+      const MedkitRect = Medkit.getBoundingClientRect();
+      const spaceshipRect = spaceshipElement.getBoundingClientRect();
+
+      let Debounce2 = false;
+
+      if (
+        MedkitRect.left < spaceshipRect.right &&
+        MedkitRect.right > spaceshipRect.left &&
+        MedkitRect.top < spaceshipRect.bottom &&
+        MedkitRect.bottom > spaceshipRect.top
+      ) {
+        Medkit.style.display = "none";
+        MedkitSpawned = false;
+        if (debounce == false) {
+          if (hearts == 2) {
+            document.getElementById("Heart3").style.color = "red";
+            hearts = 3;
+          }
+          if (hearts == 1) {
+            document.getElementById("Heart2").style.color = "red";
+            hearts = 2;
+          }
+          debounce = true;
+          setTimeout(() => {
+            debounce = false;
+          }, 1000);
+        }
+      }
+
+
+    }
+
+    function Replay() {
+      document.getElementById("Ui").style.display = "none";
+      document.getElementById("UiStart").style.display = "none";
+      document.getElementById("container").style.display = "block";
+      Points = 0;
+      hearts = 3;
+      document.getElementById("Heart1").style.color = "red";
+      document.getElementById("Heart2").style.color = "red";
+      document.getElementById("Heart3").style.color = "red";
+
+      document.getElementById("Spaceship").style.left = "50%"
+      document.getElementById("Spaceship").style.top = "300px"
+    }
+
+    setInterval(checkCoinCollision, 10);
+
+    const AU = document.getElementById('AU');
+
+    // Detect when the button is pushed down
+    AU.addEventListener('touchstart', () => {
+      movingUp = true;
+    });
+
+    // Detect when the button is released
+    AU.addEventListener('touchend', () => {
+      movingUp = false;
+    });
+
+    const AL = document.getElementById('AL');
+    AL.addEventListener('touchstart', () => {
+      movingLeft = true;
+    });
+
+    AL.addEventListener('touchend', () => {
+      movingLeft = false;
+    });
+    const AD = document.getElementById('AD');
+    AD.addEventListener('touchstart', () => {
+      movingDown = true;
+    });
+    AD.addEventListener('touchend', () => {
+      movingDown = false;
+    });
+    const AR = document.getElementById('AR');
+    AR.addEventListener('touchstart', () => {
+      movingRight = true;
+    });
+    AR.addEventListener('touchend', () => {
+      movingRight = false;
+    });
+
+  </script>
+
+
+
+
+  </body>
+</html>

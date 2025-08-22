@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Higher or lower</title>
+    <link rel="stylesheet" href="../Scripts/style.css">
+    <link rel="icon" href="../Images/Favicon.png" type="image/x-icon">
+  </head>
+  <body>
+        <nav class="Nav">
+          <ul>
+            <li><a>Kaboomcrew.github.io</a></li>
+            <li class="aNav"><a style="color: white; text-decoration: none;" href="../Pages/UpdateLogs.html">Update logs</a></li>
+            <li class="aNav"><a style="color: white; text-decoration: none;" href="../index.html">Home</a></li>
+            <input class="SearchBar" placeholder="Search &#128269;" type="search" id="searchInput"></input>
+          </ul>
+        </nav>
+
+
+                <ul class="Results" id="results"></ul>
+        <script src="../Scripts/script.js"></script>
+
+
+<style>
+  .TopSec {
+    width: 97%;
+    height: 200px;
+    background-color: white;
+    border-radius: 100px;
+    border-style: solid;
+    border-width: 10px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 2em;
+    text-align: center;
+  }
+
+  .inputbox {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    width: 65%;
+    height: 50px;
+    font-size: 2em;
+    border-radius: 25px;
+    text-align: center;
+    border-width: 5px;
+    border-style: solid;
+    border-color: black;
+  }
+
+  .FOB {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    width: 65%;
+    height: 50px;
+    font-size: 2em;
+    border-radius: 25px;
+    text-align: center;
+    background-color: dodgerblue;
+    border-width: 5px;
+    border-style: solid;
+    border-color: black;
+  }
+
+  .holb {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 1.2em;
+    color: black;
+  }
+
+  .maingame {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 50px;
+    background-color: royalblue;
+    text-align: center;
+    width: 75%;
+    height: 700px;
+    border-radius: 50px;
+    border-style: solid;
+    border-width: 10px;
+    background-size: 150px;
+  }
+
+  .holsec {
+    height: 250px;
+    width: 70%;
+    background-color: white;
+    border-radius: 70px;
+    border-style: solid;
+    border-width: 5px;
+  }
+</style>
+
+  <script>
+    var randomnum = Math.floor(Math.random() * 101);
+    var Tries = 0;
+
+    var reloplay = 0;
+
+    const button = document.getElementById("Button");
+
+    function HigherOrLower() {
+      if (reloplay == 0) {
+        const inputbar = document.getElementById("Input").value;
+        var inputnum = inputbar;
+        document.getElementById('Input').value = '';
+
+        const holtext1 = document.getElementById("hol1");
+        const holtext2 = document.getElementById("hol2");
+        const holtext3 = document.getElementById("hol3");
+        const holtext4 = document.getElementById("hol4");
+        const holtext5 = document.getElementById("hol5");
+
+        if (inputnum == randomnum) {
+          Tries += 1;
+          holtext1.innerHTML = "WINNER!";
+          holtext2.innerHTML = "It took you " + Tries + " Tries To Guess the number";
+          holtext3.innerHTML = "The Avarge Number of tries people take is 5 - 6 tries";
+          holtext4.innerHTML = "click the guess button to play again!";
+          holtext5.innerHTML = "the number was " + randomnum;
+          reloplay = 1;
+          document.getElementById("Button").innerHTML = "Play Again!";
+        }
+        else if (randomnum > inputnum) {
+          holtext5.innerHTML = holtext4.innerHTML;
+          holtext4.innerHTML = holtext3.innerHTML;
+          holtext3.innerHTML = holtext2.innerHTML;
+          holtext2.innerHTML = holtext1.innerHTML;
+          holtext1.innerHTML = inputnum + " , Too Low!";
+          Tries += 1;
+        }
+        else if (randomnum < inputnum) {
+          holtext5.innerHTML = holtext4.innerHTML;
+          holtext4.innerHTML = holtext3.innerHTML;
+          holtext3.innerHTML = holtext2.innerHTML;
+          holtext2.innerHTML = holtext1.innerHTML;
+          holtext1.innerHTML = inputnum + " , Too High!";
+          Tries += 1;
+        }
+      }
+      else if (reloplay == 1) {
+        const holtext1 = document.getElementById("hol1");
+        const holtext2 = document.getElementById("hol2");
+        const holtext3 = document.getElementById("hol3");
+        const holtext4 = document.getElementById("hol4");
+        const holtext5 = document.getElementById("hol5");
+        holtext5.innerHTML = "";
+        holtext4.innerHTML = "";
+        holtext3.innerHTML = "";
+        holtext2.innerHTML = "";
+        holtext1.innerHTML = "";
+        Tries = 0;
+        randomnum = Math.floor(Math.random() * 101);
+        reloplay = 0;
+        document.getElementById("Button").innerHTML = "Guess";
+      }
+    }
+
+
+    function search() {
+      if (event.keyCode == 13) {
+        HigherOrLower();
+      }
+    }
+  </script>
+
+    <section class="maingame">
+      <section class="TopSec">
+        <div style="text-align: center;">
+          <h1>Higher Or Lower V5</h1>
+          <p style="font-size: 0.7em;">Can you guess the random number between 1-100?</p>
+        </div>
+      </section>
+      <br> <br>
+      <hr style="height: 5px; background-color: white;"> <br>
+
+      <div style="text-align: center;">
+        <input class="inputbox" autocomplete="off" type="text" onkeydown="search()" id="Input"> <br> <br> <button
+          id="Button" onclick=HigherOrLower() class="FOB">Guess</button>
+        <br> <br>
+        <div class="holb">
+          <center>
+            <section class="holsec">
+              <p id="hol1"></p>
+              <p id="hol2"></p>
+              <p id="hol3"></p>
+              <p id="hol4"></p>
+              <p id="hol5"></p>
+            </section>
+          </center>
+        </div>
+      </div>
+    </section>
+
+
+
+
+
+
+  </body>
+</html>

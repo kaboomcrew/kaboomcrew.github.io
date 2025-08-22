@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <meta http-equiv="X-UA-Compatible" content="ie=edge">
+            <meta name="keywords" content="Games, Unblocked, Kaboomcrew, Kaboom">
+            <meta name="description" content="Free unblocked games!">
+            <meta name="author" content="Kaboomcrew">
+            <title>kaboomcrew.github.io</title>
+            <link rel="icon" href="Images/Favicon.png" type="image/x-icon">
+        </head>
+        <style>
+            div {
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                width: 600px;
+                height: 200px;
+                background-color: rgb(49, 49, 49);
+                border-radius: 10px;
+                color: white;
+                align-items: center;
+                font-family:Arial, Helvetica, sans-serif;
+                padding-top: 20px;
+                padding-left: 10px;
+                text-align: center;
+            }
+            input {
+                width: 50%;
+                height: 50px;
+                font-size: large;
+                text-align: center;
+            }
+            button {
+                width: 60px;
+                height: 50px;
+                background-color: rgb(224, 79, 27);
+                border: none;
+                color: white;
+            }
+            body {
+                background-color: rgb(39, 39, 39);
+            }
+            h1 {
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 50px;
+                color: white;
+                text-align: center;
+            }
+        </style>
+        <body>
+            <h1>Kaboom's Unblocked Games</h1>
+            <p style="color: white; text-align: center; font-family: Arial, Helvetica, sans-serif;">Comming Soon!</p>
+            <div>
+                <p style="font-size: 28px;">Early Access Portal</p>
+                <input id="Pin" placeholder="Enter Pin" type="password">
+                <button onclick="CheckPinIsCorrect()">Log In</button>
+            </div>
+        </body>
+        <script>
+            const Pin = document.getElementById("Pin");
+            function CheckPinIsCorrect() {
+                const secret = "MjY1" + "NDA=";
+                if (Pin.value === atob(secret)) {
+                    window.location.href = 'home.html';
+                }
+            }
+        </script>
+</html>
