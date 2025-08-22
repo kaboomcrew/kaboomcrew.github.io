@@ -1,5 +1,5 @@
 # Welcome to kaboom's unblocked games!
-Visit kaboomcrew.github.io to play for free
+Visit https://kaboomcrew.github.io to play for free
 
 ## Do i make these games?
 Yes! I have made all of them (Mostly) myself. So please have fun enjoying my creations!
