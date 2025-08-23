@@ -93,11 +93,14 @@ li a {
   color: transparent;
 }
 .SiteImage {
-  width: 100%;
-  z-index: -1;
   position: absolute;
   top: 50px;
-  left: 0;
+  left: 50%;              /* Move to the middle */
+  transform: translateX(-50%); /* Center it horizontally */
+  min-width: 1517px;      /* Keep your minimum width */
+  width: 100%;            /* Allow scaling up/down */
+  height: auto;
+  z-index: -1;
 }
 .Events {
   height: fit-content;
