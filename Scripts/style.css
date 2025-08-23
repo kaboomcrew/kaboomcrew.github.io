@@ -15,6 +15,7 @@ body {
     box-shadow: -5px 5px 2px rgb(211, 211, 211, 0.3);
     font-family: Arial, Helvetica, sans-serif;
     z-index: 10000000;
+    -webkit-backface-visibility: hidden;
 }
 
 h1 {
