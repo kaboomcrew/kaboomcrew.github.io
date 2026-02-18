@@ -15,7 +15,7 @@
   const input = document.getElementById('searchInput');
   const resultsList = document.getElementById('results');
 
-  input.autocomplete = "off";
+  input.setAttribute("autocomplete", "off");
 
   input.addEventListener('input', () => {
     const query = input.value.toLowerCase();
